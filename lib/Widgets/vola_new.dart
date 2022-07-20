@@ -1,6 +1,10 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:labs_flutter_pulse/Modeles/vola_model.dart';
+import 'package:labs_flutter_pulse/Services/vola_http_service.dart';
+import 'package:labs_flutter_pulse/Widgets/home.dart';
+import 'package:labs_flutter_pulse/Widgets/vola_list.dart';
 import 'package:select_form_field/select_form_field.dart';
 import 'package:intl/intl.dart';
 import 'package:http/http.dart' as http;
@@ -59,12 +63,18 @@ class VolaForm extends StatefulWidget {
 class _VolaFormState extends State<VolaForm> {
   // Create a text controller and use it to retrieve the current value
   // of the TextField.
+  final VolaHttpService volaHttpService = VolaHttpService();
   final montantController = TextEditingController();
   final descriptionController = TextEditingController();
-  final format = DateFormat("yyyy-MM-dd");
-  DateTime _selectedDate =  DateTime.now();
+  final format = DateFormat("yyyy-MM-dd H:i:s");
+  // data post
+  var montantVola;
+  var descriptionVola;
+  var typeVola = 'credit';
+  DateTime _selectedDateVola =  DateTime.now();
+
   final _formKey = GlobalKey<FormState>();
-  Future<Vol>? _futureVola;
+  Future<Vola>? _futureVola;
 
   final List<Map<String, dynamic>> _types = [
     {
@@ -114,7 +124,7 @@ class _VolaFormState extends State<VolaForm> {
       }
       setState(() {
         //for rebuilding the ui
-        _selectedDate = pickedDate;
+        _selectedDateVola = pickedDate;
       });
     });
   }
@@ -123,27 +133,27 @@ class _VolaFormState extends State<VolaForm> {
     print('Second text field: ${montantController.text}');
   }
 
-  FutureBuilder<Vol> buildFutureBuilder() {
-    return FutureBuilder<Vol>(
-      future: _futureVola,
-      builder: (context, snapshot) {
-        print('====== data =========');
-        print(snapshot.data);
-        print('====== data =========');
-        if (snapshot.hasData) {
-          return Text(snapshot.data!.montant + " " +snapshot.data!.description);
-        } else if (snapshot.hasError) {
-          return Text('${snapshot.error}');
-        }
-
-        return const CircularProgressIndicator();
-      },
-    );
-  }
+  // FutureBuilder<Vola> buildFutureBuilder() {
+  //   return FutureBuilder<Vola>(
+  //     future: _futureVola,
+  //     builder: (context, snapshot) {
+  //       print('====== data =========');
+  //       print(snapshot.data);
+  //       print('====== data =========');
+  //       if (snapshot.hasData) {
+  //         return Text(snapshot.data!.montant + " " +snapshot.data!.description);
+  //       } else if (snapshot.hasError) {
+  //         return Text('${snapshot.error}');
+  //       }
+  //
+  //       return const CircularProgressIndicator();
+  //     },
+  //   );
+  // }
   Column buildColumn() {
       return Column(
         children: [
-          ElevatedButton(child: Text('Add Date' + format.format(_selectedDate)), onPressed: _pickDateDialog),
+          ElevatedButton(child: Text(format.format(_selectedDateVola)), onPressed: _pickDateDialog),
 
           SelectFormField(
             type: SelectFormFieldType.dropdown, // or can be dialog
@@ -151,8 +161,16 @@ class _VolaFormState extends State<VolaForm> {
             icon: Icon(Icons.format_shapes),
             labelText: 'Shape',
             items: _types,
-            onChanged: (val) => print(val),
-            onSaved: (val) => print(val),
+            onChanged: (val) {
+              setState(() {
+                typeVola = val;
+              });
+            },
+            // onSaved: (val) {
+            //   setState(() {
+            //     typeVola = val;
+            //   });
+            // },
           ),
           TextFormField(
             validator: (value) {
@@ -191,8 +209,16 @@ class _VolaFormState extends State<VolaForm> {
                   const SnackBar(content: Text('Processing Data')),
                 );
                 setState(() {
-                  _futureVola = createAlbum(montantController.text, descriptionController.text);
+                  _futureVola = volaHttpService.createAlbum(
+                      int.parse(montantController.text),
+                      descriptionController.text,
+                      typeVola,
+                      _selectedDateVola
+                  );
                 });
+                Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => const Home()),
+                );
 
               }
             },
@@ -209,7 +235,7 @@ class _VolaFormState extends State<VolaForm> {
       ),
       body: Form(
         key: _formKey,
-        child: (_futureVola == null) ? buildColumn() : buildFutureBuilder(),
+        child: buildColumn() //(_futureVola == null) ? buildColumn() : buildFutureBuilder(),
       ),
     );
   }
