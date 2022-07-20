@@ -1,5 +1,6 @@
 //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 hubgit
 import 'package:flutter/material.dart';
+import 'package:labs_flutter_pulse/Widgets/home.dart';
 import 'package:labs_flutter_pulse/Widgets/vola.dart';
 import 'package:labs_flutter_pulse/Widgets/vola_list.dart';
 import 'package:labs_flutter_pulse/Widgets/vola_new.dart';
@@ -15,7 +16,7 @@ void main() {
       initialRoute: '/',
       routes: {
         // When navigating to the "/" route, build the FirstScreen widget.
-        '/': (context) => const FirstScreen(),
+        '/': (context) => const Home(),
         // When navigating to the "/second" route, build the SecondScreen widget.
         '/second': (context) => const SecondScreen(),
         '/vola': (context) => const Vola(),

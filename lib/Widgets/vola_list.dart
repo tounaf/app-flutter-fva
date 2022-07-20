@@ -2,18 +2,8 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:labs_flutter_pulse/Modeles/vola_model.dart';
 import 'package:http/http.dart' as http;
-
-Future<List<Vola>> fetchVola() async {
-  final response = await http.get(Uri.parse('http://10.0.2.2:8000/user/list'));
-  if (response.statusCode == 200) {
-    List jsonResponse = json.decode(response.body);
-    // print('=========');
-    // print(jsonResponse);
-    return jsonResponse.map((data) => Vola.fromJson(data)).toList();
-  } else {
-    throw Exception('Unexpected error occured!');
-  }
-}
+import 'package:labs_flutter_pulse/Services/vola_http_service.dart';
+import 'package:labs_flutter_pulse/Widgets/vola_new.dart';
 
 class VolaList extends StatefulWidget {
   VolaList({super.key});
@@ -23,20 +13,20 @@ class VolaList extends StatefulWidget {
 }
 
 class _VolaListState extends State<VolaList> {
+  final VolaHttpService volaHttpService = VolaHttpService();
   late Future <List<Vola>> futureData;
   final _biggerFont = const TextStyle(fontSize: 18); // NEW
 
   @override
   void initState() {
     super.initState();
-    futureData = fetchVola();
+    futureData = volaHttpService.fetchVola();
   }
 
   FutureBuilder<List<Vola>> buildFutureBuilder() {
     return FutureBuilder <List<Vola>>(
       future: futureData,
       builder: (BuildContext ctx, AsyncSnapshot<List> snapshot) {
-        print('============== ');
       print(snapshot);
       return snapshot.hasData
           ? ListView.builder(
@@ -65,10 +55,15 @@ class _VolaListState extends State<VolaList> {
     return MaterialApp(
       title: 'Flutter API and ListView Example',
       home: Scaffold(
-        appBar: AppBar(
-          title: Text('Flutter ListView'),
+        body: buildFutureBuilder(),
+        floatingActionButton: FloatingActionButton(
+          child: Icon(Icons.add),
+          onPressed: () {
+            Navigator.push(context,
+              MaterialPageRoute(builder: (context) => const VolaForm()),
+            );
+          },
         ),
-        body: buildFutureBuilder()
       ),
     );
   }
