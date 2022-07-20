@@ -39,6 +39,7 @@ dependencies:
   select_form_field: ^2.2.0
   datetime_picker_formfield: ^2.0.0
   intl: ^0.17.0
+  http: ^0.13.4
 
 dev_dependencies:
   flutter_test:
@@ -50,7 +51,12 @@ dev_dependencies:
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
   flutter_lints: ^2.0.0
+  flutter_launcher_icons: ^0.9.3
 
+flutter_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "assets/fav.png"
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 
