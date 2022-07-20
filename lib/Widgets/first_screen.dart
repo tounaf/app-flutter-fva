@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:labs_flutter_pulse/Widgets/vola.dart';
+import 'package:labs_flutter_pulse/Widgets/vola_list.dart';
 import './second_screen.dart';
 class FirstScreen extends StatelessWidget {
   const FirstScreen({super.key});
@@ -24,7 +25,9 @@ class FirstScreen extends StatelessWidget {
                   child: Text('VOLA')),
               ElevatedButton(
                   onPressed: () {
-                    //test
+                    Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => VolaList()),
+                    );
                   },
                   child: Text('ASA')),
             ],

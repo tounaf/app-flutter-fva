@@ -1,5 +1,7 @@
+//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 hubgit
 import 'package:flutter/material.dart';
 import 'package:labs_flutter_pulse/Widgets/vola.dart';
+import 'package:labs_flutter_pulse/Widgets/vola_list.dart';
 import 'package:labs_flutter_pulse/Widgets/vola_new.dart';
 import './Widgets/second_screen.dart';
 import './Widgets/first_screen.dart';
@@ -18,6 +20,7 @@ void main() {
         '/second': (context) => const SecondScreen(),
         '/vola': (context) => const Vola(),
         '/vola-new': (context) => const VolaForm(),
+        '/vola-list': (context) => VolaList(),
       },
     ),
   );
