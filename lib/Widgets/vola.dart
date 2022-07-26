@@ -5,6 +5,7 @@ class Vola extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var height = MediaQuery.of(context).size.height;
     return Scaffold(
       appBar: AppBar(
         title: const Text('VOLA'),
@@ -21,7 +22,7 @@ class Vola extends StatelessWidget {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.add),
+        child: Icon(Icons.add,),
         onPressed: () {
           Navigator.push(context,
             MaterialPageRoute(builder: (context) => const VolaForm()),

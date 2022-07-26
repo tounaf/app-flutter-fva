@@ -5,9 +5,12 @@ import 'package:labs_flutter_pulse/Widgets/vola.dart';
 import 'package:labs_flutter_pulse/Widgets/vola_list.dart';
 import 'package:labs_flutter_pulse/Widgets/vola_new.dart';
 import './Widgets/second_screen.dart';
-import './Widgets/first_screen.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
-void main() {
+void main() async {
+  WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
+  await dotenv.load(fileName: '.env');
+
   runApp(
     MaterialApp(
       title: 'Named Routes Demo',

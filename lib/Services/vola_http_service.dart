@@ -1,16 +1,24 @@
 import 'dart:convert';
 import 'package:intl/intl.dart';
-import 'package:labs_flutter_pulse/Modeles/vola_model.dart';
+import 'package:labs_flutter_pulse/Models/vola_model.dart';
 import 'package:http/http.dart' as http;
 import 'dart:async';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:labs_flutter_pulse/Services/token_service.dart';
 
 class VolaHttpService {
+  var baseUrl = dotenv.env['HOST'];
   Future<List<Vola>> fetchVola() async {
-    final response = await http.get(Uri.parse('http://10.0.2.2:8000/api/volas'));
+    final token = await TokenService().getToken();
+    final response = await http.get(Uri.parse('${baseUrl}/api/volas'),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        'Authorization': 'Bearer $token'
+      },);
     if (response.statusCode == 200) {
       var jsonResponse = jsonDecode(response.body);
-      // print('=========');
-      // print(jsonResponse);
+      print('===========RUL');
+      print(jsonResponse);
       return List.generate(jsonResponse['hydra:member'].length, (index) {
         return Vola.fromJson(jsonResponse, jsonResponse['hydra:member'][index]);
       });
@@ -18,6 +26,7 @@ class VolaHttpService {
     } else {
       throw Exception('Unexpected error occured!');
     }
+
   }
 
   Future<Vola> createAlbum(int montant, String description, String type, DateTime date) async {
@@ -29,10 +38,15 @@ class VolaHttpService {
     print(type);
     print('---- date');
     print(date);
+    final token = await TokenService().getToken();
+    print('-------- token -------------');
+    print(token);
+    print('-------- token -------------');
     final response = await http.post(
-      Uri.parse('http://10.0.2.2:8000/api/volas'),
+      Uri.parse('${baseUrl}/api/volas'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
+        'Authorization': 'Bearer $token'
       },
       body: jsonEncode(<String, dynamic>{
         'montant': montant,

@@ -5,14 +5,14 @@ import 'package:http/http.dart' as http;
 import 'package:labs_flutter_pulse/Services/vola_http_service.dart';
 import 'package:labs_flutter_pulse/Widgets/vola_new.dart';
 
-class VolaList extends StatefulWidget {
-  VolaList({super.key});
+class UserList extends StatefulWidget {
+  UserList({super.key});
 
   @override
-  _VolaListState createState() => _VolaListState();
+  _UserListState createState() => _UserListState();
 }
 
-class _VolaListState extends State<VolaList> {
+class _UserListState extends State<UserList> {
   final VolaHttpService volaHttpService = VolaHttpService();
   late Future <List<Vola>> futureData;
   final _biggerFont = const TextStyle(fontSize: 18); // NEW
