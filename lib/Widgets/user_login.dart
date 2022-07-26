@@ -118,10 +118,6 @@ class _UserLoginFormState extends State<UserLoginForm> {
                   passwordController.text
               );
               _isAuthenticated.then((value) {
-                print('----- authenticated');
-                print(value);
-                print(value == true);
-                print('----- authenticated');
                 if(value == true) {
                   Navigator.push(context,
                     MaterialPageRoute(builder: (context) => const Home()),

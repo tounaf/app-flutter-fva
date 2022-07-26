@@ -20,10 +20,6 @@ class User {
       });
 
   factory User.fromJson(schema, Map<String, dynamic> json) {
-    print('==== json ');
-    print(json);
-    print('==== schema ');
-    print(schema);
     return User(
       schemaContext: schema['@context'],
       schemaType: schema['@type'],

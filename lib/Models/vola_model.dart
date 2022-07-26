@@ -16,10 +16,6 @@ class Vola {
       });
 
   factory Vola.fromJson(schema, Map<String, dynamic> json) {
-    print('==== json ');
-    print(json);
-    print('==== schema ');
-    print(schema);
     return Vola(
       schemaContext: schema['@context'],
       schemaType: schema['@type'],

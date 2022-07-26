@@ -16,12 +16,9 @@ class UserHttpService {
     final response = await http.get(Uri.parse('${baseUrl}/api/volas'));
     if (response.statusCode == 200) {
       var jsonResponse = jsonDecode(response.body);
-      // print('=========');
-      // print(jsonResponse);
       return List.generate(jsonResponse['hydra:member'].length, (index) {
         return User.fromJson(jsonResponse, jsonResponse['hydra:member'][index]);
       });
-      // return jsonResponse.map((data) => Vola.fromJson(data)).toList();
     } else {
       throw Exception('Unexpected error occured!');
     }
@@ -40,10 +37,6 @@ class UserHttpService {
         'phone': phone,
       }),
     );
-    print('------------ response new ---------');
-    print(response);
-    print(response.statusCode);
-    print('------------ response new ---------');
     if (response.statusCode == 201) {
       // If the server did return a 201 CREATED response,
       // then parse the JSON.
@@ -74,13 +67,9 @@ class UserHttpService {
       // If the server did return a 201 CREATED response,
       // then parse the JSON.
       var jsonResponse = jsonDecode(response.body);
-
-      print(jsonResponse['token']);
       _prefs.setToken(jsonResponse['token'].toString());
       return Future.value(true);
     } else {
-      // If the server did not return a 201 CREATED response,
-      // then throw an exception.
       throw Exception('Failed to create album.');
     }
   }

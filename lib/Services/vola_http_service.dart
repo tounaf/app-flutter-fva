@@ -17,12 +17,9 @@ class VolaHttpService {
       },);
     if (response.statusCode == 200) {
       var jsonResponse = jsonDecode(response.body);
-      print('===========RUL');
-      print(jsonResponse);
       return List.generate(jsonResponse['hydra:member'].length, (index) {
         return Vola.fromJson(jsonResponse, jsonResponse['hydra:member'][index]);
       });
-      // return jsonResponse.map((data) => Vola.fromJson(data)).toList();
     } else {
       throw Exception('Unexpected error occured!');
     }
@@ -30,18 +27,9 @@ class VolaHttpService {
   }
 
   Future<Vola> createAlbum(int montant, String description, String type, DateTime date) async {
-    print('---- montant');
-    print(montant);
-    print('---- description');
-    print(description);
-    print('---- type');
-    print(type);
-    print('---- date');
-    print(date);
+
     final token = await TokenService().getToken();
-    print('-------- token -------------');
-    print(token);
-    print('-------- token -------------');
+
     final response = await http.post(
       Uri.parse('${baseUrl}/api/volas'),
       headers: <String, String>{
@@ -55,10 +43,7 @@ class VolaHttpService {
         'date': DateFormat('yyyy-MM-dd').format(date),
       }),
     );
-    print('------------ response new ---------');
-    print(response);
-    print(response.statusCode);
-    print('------------ response new ---------');
+
     if (response.statusCode == 201) {
       // If the server did return a 201 CREATED response,
       // then parse the JSON.

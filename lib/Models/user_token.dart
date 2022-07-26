@@ -6,7 +6,6 @@ class UserToken {
       });
 
   factory UserToken.fromJson(Map<String, dynamic> json) {
-    print('==== json ');
     return UserToken(
       token: json['token'],
     );
