@@ -26,7 +26,7 @@ class VolaHttpService {
 
   }
 
-  Future<Vola> createAlbum(int montant, String description, String type, DateTime date) async {
+  Future<Vola> addVola(int montant, String description, String type, DateTime date) async {
 
     final token = await TokenService().getToken();
 

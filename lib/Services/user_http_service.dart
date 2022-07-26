@@ -12,8 +12,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class UserHttpService {
   var baseUrl = dotenv.env['HOST'];
-  Future<List<User>> fetchVola() async {
-    final response = await http.get(Uri.parse('${baseUrl}/api/volas'));
+  Future<List<User>> findAll() async {
+    final response = await http.get(Uri.parse('${baseUrl}/api/users'));
     if (response.statusCode == 200) {
       var jsonResponse = jsonDecode(response.body);
       return List.generate(jsonResponse['hydra:member'].length, (index) {
@@ -24,9 +24,9 @@ class UserHttpService {
     }
   }
 
-  Future<User> createAlbum(String username, String firstname, String lastname, String phone) async {
+  Future<User> add(String username, String firstname, String lastname, String phone) async {
     final response = await http.post(
-      Uri.parse('${baseUrl}/api/volas'),
+      Uri.parse('${baseUrl}/api/users'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },

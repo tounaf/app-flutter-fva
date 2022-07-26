@@ -1,7 +1,9 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:labs_flutter_pulse/Models/user_model.dart';
 import 'package:labs_flutter_pulse/Models/vola_model.dart';
 import 'package:http/http.dart' as http;
+import 'package:labs_flutter_pulse/Services/user_http_service.dart';
 import 'package:labs_flutter_pulse/Services/vola_http_service.dart';
 import 'package:labs_flutter_pulse/Widgets/vola_new.dart';
 
@@ -13,21 +15,20 @@ class UserList extends StatefulWidget {
 }
 
 class _UserListState extends State<UserList> {
-  final VolaHttpService volaHttpService = VolaHttpService();
-  late Future <List<Vola>> futureData;
+  final UserHttpService userHttpService = UserHttpService();
+  late Future <List<User>> futureData;
   final _biggerFont = const TextStyle(fontSize: 18); // NEW
 
   @override
   void initState() {
     super.initState();
-    futureData = volaHttpService.fetchVola();
+    futureData = userHttpService.findAll();
   }
 
-  FutureBuilder<List<Vola>> buildFutureBuilder() {
-    return FutureBuilder <List<Vola>>(
+  FutureBuilder<List<User>> buildFutureBuilder() {
+    return FutureBuilder <List<User>>(
       future: futureData,
       builder: (BuildContext ctx, AsyncSnapshot<List> snapshot) {
-      print(snapshot);
       return snapshot.hasData
           ? ListView.builder(
         // render the list

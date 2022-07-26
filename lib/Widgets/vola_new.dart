@@ -192,7 +192,7 @@ class _VolaFormState extends State<VolaForm> {
                   const SnackBar(content: Text('Processing Data')),
                 );
                 setState(() {
-                  _futureVola = volaHttpService.createAlbum(
+                  _futureVola = volaHttpService.addVola(
                       int.parse(montantController.text),
                       descriptionController.text,
                       typeVola,
