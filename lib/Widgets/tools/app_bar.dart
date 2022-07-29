@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:labs_flutter_pulse/Widgets/entry_list.dart';
 import 'package:labs_flutter_pulse/Widgets/first_screen.dart';
 import 'package:labs_flutter_pulse/Widgets/vola_list.dart';
 class AppBarFva extends StatelessWidget {
@@ -76,7 +77,7 @@ class AppBarFva extends StatelessWidget {
       body: TabBarView(
         children: [
           const FirstScreen(),
-          VolaList(),
+          EntryList(),
           const Icon(Icons.directions_bike),
         ],
       ),
