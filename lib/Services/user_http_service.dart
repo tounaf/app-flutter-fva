@@ -24,24 +24,40 @@ class UserHttpService {
     }
   }
 
-  Future<User> add(String username, String firstname, String lastname, String phone) async {
+  Future<bool> add(
+      String username,
+      String firstname,
+      String lastname,
+      String phone,
+      String address,
+      String groupId
+      ) async {
+
+    final token = await TokenService().getToken();
+    print('==================');
+    print(groupId);
+    print(username);
     final response = await http.post(
       Uri.parse('${baseUrl}/api/users'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
+        'Authorization': 'Bearer $token'
       },
       body: jsonEncode(<String, dynamic>{
         'username': username,
         'firstname': firstname,
         'lastname': lastname,
         'phone': phone,
+        'address': address,
+        'group': groupId,
       }),
     );
+    print(response.statusCode);
     if (response.statusCode == 201) {
       // If the server did return a 201 CREATED response,
       // then parse the JSON.
       var jsonResponse = jsonDecode(response.body);
-      return User.fromJson(jsonResponse, jsonResponse['hydra:member']);
+      return Future.value(true);
     } else {
       // If the server did not return a 201 CREATED response,
       // then throw an exception.

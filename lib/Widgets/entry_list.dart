@@ -1,9 +1,10 @@
 import 'dart:convert';
-import 'dart:html';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:labs_flutter_pulse/Models/entry_model.dart';
 import 'package:labs_flutter_pulse/Services/entry_http_service.dart';
+import 'package:labs_flutter_pulse/Widgets/entry_new.dart';
+import 'package:labs_flutter_pulse/Widgets/user_new.dart';
 import 'package:labs_flutter_pulse/Widgets/vola_new.dart';
 
 class EntryList extends StatefulWidget {
@@ -38,7 +39,7 @@ class _EntryListState extends State<EntryList> {
           // render list item
           child: ListTile(
             contentPadding: const EdgeInsets.all(10),
-            title: Text(snapshot.data![index].montant.toString()),
+            title: Text(snapshot.data![index].amount.toString()),
             subtitle: Text(snapshot.data![index].description),
           ),
         ),
@@ -53,36 +54,39 @@ class _EntryListState extends State<EntryList> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter API and ListView Example',
-      home: Scaffold(
-        body: Column(
-          children: [
-            Card(child: SizedBox(
-              width: 400,
-              height: 100,
-              child: Center(child: const Text('Somme'),),
-            ),
-                color: Colors.yellow[300],
-                shadowColor: Colors.blue,
-                shape: RoundedRectangleBorder(
+    return Scaffold(
+      appBar: AppBar(
+        shadowColor: Colors.red,
+        elevation: 15,
+        title: const Text('Vola'),
+        backgroundColor: Colors.pink.shade400,
+      ),
+      body: Column(
+        children: [
+          Card(child: SizedBox(
+            width: 400,
+            height: 100,
+            child: Center(child: const Text('Somme')),
+          ),
+              color: Colors.yellow[300],
+              shadowColor: Colors.blue,
+              shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(20.0),
                   side: BorderSide(
-                    color: Colors.greenAccent
+                      color: Colors.greenAccent
 
                   )
-                )),
-            Expanded(child: buildFutureBuilder())
-          ],
-        ),
-        floatingActionButton: FloatingActionButton(
-          child: Icon(Icons.add),
-          onPressed: () {
-            Navigator.push(context,
-              MaterialPageRoute(builder: (context) => const VolaForm()),
-            );
-          },
-        ),
+              )),
+          Expanded(child: buildFutureBuilder())
+        ],
+      ),
+      floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.add),
+        onPressed: () {
+          Navigator.push(context,
+            MaterialPageRoute(builder: (context) => const UserNewForm()),
+          );
+        },
       ),
     );
   }

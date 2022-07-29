@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:labs_flutter_pulse/Widgets/groupe_list.dart';
 import 'package:labs_flutter_pulse/Widgets/user_login.dart';
 import 'package:labs_flutter_pulse/Widgets/vola.dart';
 import 'package:labs_flutter_pulse/Widgets/vola_list.dart';
@@ -15,6 +16,13 @@ class FirstScreen extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             //crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
+              ElevatedButton(
+                  onPressed: () {
+                    Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => GroupeList()),
+                    );
+                  },
+                  child: Text('GROUPE')),
               ElevatedButton(
                   onPressed: () {
                     Navigator.push(context,

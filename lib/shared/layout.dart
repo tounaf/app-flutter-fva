@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:labs_flutter_pulse/Widgets/entry_list.dart';
 import 'package:labs_flutter_pulse/Widgets/first_screen.dart';
 import 'package:labs_flutter_pulse/Widgets/groupe_list.dart';
+import 'package:labs_flutter_pulse/Widgets/user_login.dart';
 import 'package:labs_flutter_pulse/Widgets/vola_list.dart';
-class AppBarFva extends StatelessWidget {
-  const AppBarFva({Key? key}) : super(key: key);
+class Layout extends StatelessWidget {
+  const Layout({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -54,33 +55,29 @@ class AppBarFva extends StatelessWidget {
       appBar: AppBar(
         shadowColor: Colors.red,
         elevation: 15,
-        // flexibleSpace: Container(clipBehavior: Clip.hardEdge,),
-        // shape: const RoundedRectangleBorder(
-        //     borderRadius: BorderRadius.only(
-        //         bottomLeft: Radius.circular(70.0),
-        //         bottomRight: Radius.circular(70.0)
-        //     )
-        // ),
-        bottom: const TabBar(
-          tabs: [
-            Tab(icon: Icon(Icons.group)),
-            Tab(icon: Icon(Icons.money)),
-            Tab(icon: Icon(Icons.people)),
-          ],
-        ),
         title: const Text('Fva'),
-        actions: const [
-          Icon(Icons.favorite),
+        actions: [
+          IconButton(onPressed: () {
+            Navigator.push(context,
+              MaterialPageRoute(builder: (context) => EntryList()),
+            );
+          }, icon: Icon(Icons.money)),
+          IconButton(
+            onPressed: () {
+              Navigator.push(context,
+                MaterialPageRoute(builder: (context) => GroupeList()),
+              );
+            },
+            icon: Icon(Icons.group_add_outlined),
+          ),
+          IconButton(onPressed: () {
+            Navigator.push(context,
+              MaterialPageRoute(builder: (context) => const UserLoginForm()),
+            );
+          }, icon: Icon(Icons.login)),
           Icon(Icons.more_vert)
         ],
         backgroundColor: Colors.pink.shade400,
-      ),
-      body: TabBarView(
-        children: [
-          GroupeList(),
-          EntryList(),
-          const FirstScreen()
-        ],
       ),
     );
   }

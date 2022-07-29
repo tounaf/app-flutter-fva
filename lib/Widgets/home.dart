@@ -2,10 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:labs_flutter_pulse/Widgets/first_screen.dart';
 import 'package:labs_flutter_pulse/Widgets/tools/app_bar.dart';
 import 'package:labs_flutter_pulse/Widgets/vola_list.dart';
+import 'package:labs_flutter_pulse/shared/layout.dart';
 
-void main() {
-  runApp(const Home());
-}
+// void main() {
+//   runApp(const Home());
+// }
 
 class Home extends StatelessWidget {
   const Home({super.key});
@@ -15,7 +16,7 @@ class Home extends StatelessWidget {
     return const MaterialApp(
       home: DefaultTabController(
         length: 3,
-        child: AppBarFva(),
+        child: Layout(),
       ),
     );
   }

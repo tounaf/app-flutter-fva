@@ -38,8 +38,8 @@ class _UserListState extends State<UserList> {
           // render list item
           child: ListTile(
             contentPadding: const EdgeInsets.all(10),
-            title: Text(snapshot.data![index].montant.toString()),
-            subtitle: Text(snapshot.data![index].description),
+            title: Text(snapshot.data![index].firstname.toString()),
+            subtitle: Text(snapshot.data![index].lastname.toString()),
           ),
         ),
       )
@@ -53,15 +53,16 @@ class _UserListState extends State<UserList> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter API and ListView Example',
-      home: Scaffold(
+    return Scaffold(
+        appBar: AppBar(
+          title: const Text('Users'),
+        ),
         body: Column(
           children: [
             Card(child: SizedBox(
               width: 400,
               height: 100,
-              child: Center(child: const Text('Somme'),),
+              child: Center(child: const Text('Users'),),
             ),
                 color: Colors.yellow[300],
                 shadowColor: Colors.blue,
@@ -83,7 +84,6 @@ class _UserListState extends State<UserList> {
             );
           },
         ),
-      ),
-    );
+      );
   }
 }
