@@ -1,26 +1,30 @@
-class User {
+class Member {
   final String schemaContext;
   final String schemaId;
   final String schemaType;
   final int id;
-  final int username;
-  final int firstname;
+  final String username;
+  final String firstname;
   final String lastname;
-  final String phone;
+  final String phoneNumber;
+  final String address;
+  final String groupe;
 
-  const User({
-        required this.schemaContext,
-        required this.schemaId,
-        required this.schemaType,
-        required this.id,
-        required this.username,
-        required this.firstname,
-        required this.lastname,
-        required this.phone
-      });
+  const Member({
+    required this.schemaContext,
+    required this.schemaId,
+    required this.schemaType,
+    required this.id,
+    required this.username,
+    required this.firstname,
+    required this.lastname,
+    required this.phoneNumber,
+    required this.address,
+    required this.groupe,
+  });
 
-  factory User.fromJson(schema, Map<String, dynamic> json) {
-    return User(
+  factory Member.fromJson(schema, Map<String, dynamic> json) {
+    return Member(
       schemaContext: schema['@context'],
       schemaType: schema['@type'],
       schemaId: schema['@id'],
@@ -28,7 +32,9 @@ class User {
       username: json['username'],
       firstname: json['firstname'],
       lastname: json['lastname'],
-      phone: json['phone'],
+      phoneNumber: json['phoneNumber'],
+      address: json['address'],
+      groupe: json['groupe'],
     );
   }
 }

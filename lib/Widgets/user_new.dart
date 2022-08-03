@@ -41,7 +41,7 @@ class _UserNewFormState extends State<UserNewForm> {
   final GroupeHttpService groupeHttpService = GroupeHttpService();
   late Future <List<Groupe>> futureData;
 
-  late String group;
+  String group = '1';
   // data post
 
   final _formKey = GlobalKey<FormState>();
@@ -79,13 +79,13 @@ class _UserNewFormState extends State<UserNewForm> {
                 return DropdownButton<String>(
 
                     hint: Text("Select"),
-                    value: '1',
+                    value: group,
                     onChanged: (newValue) {
                       setState(() {
                         group = newValue!;
                       });
                     },
-                    items: snapshot.data!.map((gp) {
+                    items: snapshot.data?.map((gp) {
                       return DropdownMenuItem<String>(
                         child: Text(gp.name),
                         value: gp.id.toString(),
@@ -184,18 +184,19 @@ class _UserNewFormState extends State<UserNewForm> {
                 //   }
                 // });
 
-                userHttpService.add(
+                var isAdded = userHttpService.add(
                     usernameController.text,
                     firstnameController.text,
                     lastnameController.text,
                     phoneController.text,
                     addressController.text,
                     group
-                ).then((value) {
+                );
+                if(isAdded == Future.value(true)) {
                   Navigator.push(context,
                     MaterialPageRoute(builder: (context) => UserList()),
                   );
-                });
+                }
               }
             },
             child: const Text('Submit'),

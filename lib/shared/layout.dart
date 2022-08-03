@@ -2,7 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:labs_flutter_pulse/Widgets/entry_list.dart';
 import 'package:labs_flutter_pulse/Widgets/first_screen.dart';
 import 'package:labs_flutter_pulse/Widgets/groupe_list.dart';
+import 'package:labs_flutter_pulse/Widgets/member_list.dart';
+import 'package:labs_flutter_pulse/Widgets/user_list.dart';
 import 'package:labs_flutter_pulse/Widgets/user_login.dart';
+import 'package:labs_flutter_pulse/Widgets/user_new.dart';
 import 'package:labs_flutter_pulse/Widgets/vola_list.dart';
 class Layout extends StatelessWidget {
   const Layout({Key? key}) : super(key: key);
@@ -42,11 +45,11 @@ class Layout extends StatelessWidget {
               ),
             ),
             ListTile(
-              title: const Text('A propos'),
+              title: const Text('Ajouter User'),
               onTap: () {
-
-                // Update the state of the app.
-                // ...
+                Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => UserNewForm()),
+                );
               },
             ),
           ],
@@ -59,7 +62,7 @@ class Layout extends StatelessWidget {
         actions: [
           IconButton(onPressed: () {
             Navigator.push(context,
-              MaterialPageRoute(builder: (context) => EntryList()),
+              MaterialPageRoute(builder: (context) => MemberList()),
             );
           }, icon: Icon(Icons.money)),
           IconButton(

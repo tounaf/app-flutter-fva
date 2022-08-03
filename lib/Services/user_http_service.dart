@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:ffi';
 import 'package:intl/intl.dart';
+import 'package:labs_flutter_pulse/Models/groupe_model.dart';
 import 'package:labs_flutter_pulse/Models/user_model.dart';
 import 'package:labs_flutter_pulse/Models/user_token.dart';
 import 'package:http/http.dart' as http;
@@ -11,13 +12,44 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 
 class UserHttpService {
-  var baseUrl = dotenv.env['HOST'];
-  Future<List<User>> findAll() async {
-    final response = await http.get(Uri.parse('${baseUrl}/api/users'));
+
+  Future<List<Member>> fetchGroupe() async {
+    final token = await TokenService().getToken();
+    final response = await http.get(Uri.parse('${baseUrl}/api/users'),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        'Authorization': 'Bearer $token'
+      },);
     if (response.statusCode == 200) {
       var jsonResponse = jsonDecode(response.body);
       return List.generate(jsonResponse['hydra:member'].length, (index) {
-        return User.fromJson(jsonResponse, jsonResponse['hydra:member'][index]);
+        print('----- response');
+        print(index);
+        print(jsonResponse['hydra:member'][index]);
+        return Member.fromJson(jsonResponse, jsonResponse['hydra:member'][index]);
+      });
+    } else {
+      throw Exception('Unexpected error occured!');
+    }
+
+  }
+
+  var baseUrl = dotenv.env['HOST'];
+  Future<List<Member>> findAll() async {
+    final token = await TokenService().getToken();
+    final response = await http.get(Uri.parse('${baseUrl}/api/users'),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        'Authorization': 'Bearer $token'
+      },
+    );
+    print('-------------------- ');
+    if (response.statusCode == 200) {
+      var jsonResponse = jsonDecode(response.body);
+      return List.generate(jsonResponse['hydra:member'].length, (index) {
+        print(index);
+        print(jsonResponse['hydra:member'][index]);
+        return Member.fromJson(jsonResponse, jsonResponse['hydra:member'][index]);
       });
     } else {
       throw Exception('Unexpected error occured!');
@@ -49,10 +81,11 @@ class UserHttpService {
         'lastname': lastname,
         'phone': phone,
         'address': address,
-        'group': groupId,
+        'group': "/api/groups/$groupId",
       }),
     );
     print(response.statusCode);
+    print(response.request);
     if (response.statusCode == 201) {
       // If the server did return a 201 CREATED response,
       // then parse the JSON.
