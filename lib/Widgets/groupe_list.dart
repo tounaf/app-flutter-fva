@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:labs_flutter_pulse/Models/groupe_model.dart';
 import 'package:http/http.dart' as http;
 import 'package:labs_flutter_pulse/Services/groupe_http_service.dart';
+import 'package:labs_flutter_pulse/Widgets/member_list.dart';
 import 'package:labs_flutter_pulse/Widgets/vola_new.dart';
 
 class GroupeList extends StatefulWidget {
@@ -36,8 +37,30 @@ class _GroupeListState extends State<GroupeList> {
           margin: const EdgeInsets.all(10),
           // render list item
           child: ListTile(
-            contentPadding: const EdgeInsets.all(10),
+            contentPadding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
+            leading: Container(
+              padding: EdgeInsets.only(right: 12.0),
+              decoration: new BoxDecoration(
+                  border: new Border(
+                      right: new BorderSide(width: 1.0, color: Colors.white24))),
+              child: Icon(Icons.autorenew, color: Colors.blue),
+            ),
+            // contentPadding: const EdgeInsets.all(10),
             title: Text(snapshot.data![index].name.toString()),
+            subtitle: Row(
+              children: <Widget>[
+                Icon(Icons.linear_scale, color: Colors.yellowAccent),
+                Text(" Intermediate", style: TextStyle(color: Colors.white))
+              ],
+            ),
+            trailing: IconButton(
+              onPressed: () {
+                Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => MemberList()),
+                );
+              },
+              icon: Icon(Icons.keyboard_arrow_right, color: Colors.black, size: 30.0),
+            )
           ),
         ),
       )
