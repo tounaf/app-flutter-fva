@@ -29,6 +29,7 @@ class _UserListState extends State<UserList> {
     return FutureBuilder <List<User>>(
       future: futureData,
       builder: (BuildContext ctx, AsyncSnapshot<List> snapshot) {
+        print(snapshot.hasData);
       return snapshot.hasData
           ? ListView.builder(
         // render the list
@@ -56,23 +57,10 @@ class _UserListState extends State<UserList> {
     return Scaffold(
         appBar: AppBar(
           title: const Text('Users'),
+          backgroundColor: Colors.pink.shade400,
         ),
         body: Column(
           children: [
-            Card(child: SizedBox(
-              width: 400,
-              height: 100,
-              child: Center(child: const Text('Users'),),
-            ),
-                color: Colors.yellow[300],
-                shadowColor: Colors.blue,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(20.0),
-                  side: BorderSide(
-                    color: Colors.greenAccent
-
-                  )
-                )),
             Expanded(child: buildFutureBuilder())
           ],
         ),

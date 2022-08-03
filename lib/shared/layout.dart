@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:labs_flutter_pulse/Widgets/entry_list.dart';
 import 'package:labs_flutter_pulse/Widgets/first_screen.dart';
 import 'package:labs_flutter_pulse/Widgets/groupe_list.dart';
+import 'package:labs_flutter_pulse/Widgets/user_list.dart';
 import 'package:labs_flutter_pulse/Widgets/user_login.dart';
 import 'package:labs_flutter_pulse/Widgets/vola_list.dart';
 class Layout extends StatelessWidget {
@@ -59,7 +60,7 @@ class Layout extends StatelessWidget {
         actions: [
           IconButton(onPressed: () {
             Navigator.push(context,
-              MaterialPageRoute(builder: (context) => EntryList()),
+              MaterialPageRoute(builder: (context) => UserList()),
             );
           }, icon: Icon(Icons.money)),
           IconButton(

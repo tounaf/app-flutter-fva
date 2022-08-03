@@ -72,26 +72,40 @@ class _UserNewFormState extends State<UserNewForm> {
   Column buildColumn() {
       return Column(
         children: [
-          FutureBuilder(
-              future: futureData,
-              builder: (BuildContext ctx, AsyncSnapshot<List> snapshot) {
-                print(snapshot);
-                return DropdownButton<String>(
+          Padding(
+            padding: EdgeInsets.all(16.0),
+            child:
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  const Text('Groupe'),
+                  // Spacer(),
+                  FutureBuilder(
+                      future: futureData,
+                      builder: (BuildContext ctx, AsyncSnapshot<List> snapshot) {
+                        print(snapshot);
+                        return DropdownButton<String>(
 
-                    hint: Text("Select"),
-                    value: '1',
-                    onChanged: (newValue) {
-                      setState(() {
-                        group = newValue!;
-                      });
-                    },
-                    items: snapshot.data!.map((gp) {
-                      return DropdownMenuItem<String>(
-                        child: Text(gp.name),
-                        value: gp.id.toString(),
-                      );
-                    }).toList());
-              }),
+                            hint: Text("Select"),
+                            value: group,
+                            onChanged: (newValue) {
+                              print(newValue);
+                              setState(() {
+                                group = newValue!;
+                              });
+                            },
+                            items: snapshot.data!.map((gp) {
+                              return DropdownMenuItem<String>(
+                                child: Text(gp.name),
+                                value: gp.id.toString(),
+                              );
+                            }).toList());
+                      }),
+                ],
+              )
+          )
+          ,
+
           TextFormField(
             validator: (value) {
               print(value);
@@ -208,6 +222,7 @@ class _UserNewFormState extends State<UserNewForm> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Nouveau'),
+        backgroundColor: Colors.pink.shade400,
       ),
       body: Form(
         key: _formKey,

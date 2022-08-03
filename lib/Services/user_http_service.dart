@@ -13,10 +13,21 @@ import 'package:shared_preferences/shared_preferences.dart';
 class UserHttpService {
   var baseUrl = dotenv.env['HOST'];
   Future<List<User>> findAll() async {
-    final response = await http.get(Uri.parse('${baseUrl}/api/users'));
+    final token = await TokenService().getToken();
+    final response = await http.get(Uri.parse('${baseUrl}/api/users'),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        'Authorization': 'Bearer $token'
+      },);
+    print(response.statusCode);
     if (response.statusCode == 200) {
       var jsonResponse = jsonDecode(response.body);
+      print(response.body);
+      print(jsonResponse['hydra:member'].length);
       return List.generate(jsonResponse['hydra:member'].length, (index) {
+        print('=========== users');
+        print(index);
+        print(jsonResponse['hydra:member'][index]);
         return User.fromJson(jsonResponse, jsonResponse['hydra:member'][index]);
       });
     } else {
@@ -49,7 +60,7 @@ class UserHttpService {
         'lastname': lastname,
         'phone': phone,
         'address': address,
-        'group': groupId,
+        'group': "/api/groups/$groupId",
       }),
     );
     print(response.statusCode);
@@ -77,6 +88,8 @@ class UserHttpService {
         'password': password,
       }),
     );
+    print(response.statusCode);
+    print(response.body);
     if (response.statusCode == 200) {
       // If the server did return a 201 CREATED response,
       // then parse the JSON.
