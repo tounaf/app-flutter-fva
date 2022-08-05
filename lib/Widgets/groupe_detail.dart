@@ -51,10 +51,20 @@ class GroupeDetail extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var groupeName = groupe.name;
+    var nbrMembre = groupe.members.length;
+    var child = nbrMembre > 0 ? buildFutureBuilder() : const Text('Aucun utilisateur');
+  
     return Scaffold(
+      appBar: AppBar(
+          shadowColor: Colors.red,
+          elevation: 15,
+          title: Text('$groupeName: $nbrMembre membre(s)'),
+          backgroundColor: Colors.pink.shade400,
+        ),
       body: Column(
         children: [
-            Expanded(child: buildFutureBuilder())
+            Expanded(child: child)
         ],
       ),
     );

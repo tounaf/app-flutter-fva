@@ -98,9 +98,7 @@ class _GroupeListState extends State<GroupeList> {
         height: 60.0,
         items: const <Widget>[
           Icon(Icons.home, size: 30),
-          Icon(Icons.list, size: 30),
-          Icon(Icons.compare_arrows, size: 30),
-          Icon(Icons.call_split, size: 30),
+          Icon(Icons.monetization_on, size: 30),
           Icon(Icons.perm_identity, size: 30),
         ],
         color: Colors.white,
@@ -117,7 +115,7 @@ class _GroupeListState extends State<GroupeList> {
               MaterialPageRoute(builder: (context) => const Home()),
             );
           }
-          if(index == 4) {
+          if(index == 2) {
             Navigator.push(context,
               MaterialPageRoute(builder: (context) => const UserNewForm()),
             );
