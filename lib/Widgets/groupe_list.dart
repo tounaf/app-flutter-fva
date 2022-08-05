@@ -3,7 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:labs_flutter_pulse/Models/groupe_model.dart';
 import 'package:http/http.dart' as http;
 import 'package:labs_flutter_pulse/Services/groupe_http_service.dart';
+import 'package:labs_flutter_pulse/Widgets/groupe_detail.dart';
+import 'package:labs_flutter_pulse/Widgets/member_list.dart';
 import 'package:labs_flutter_pulse/Widgets/vola_new.dart';
+import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 
 class GroupeList extends StatefulWidget {
   GroupeList({super.key});
@@ -36,8 +39,30 @@ class _GroupeListState extends State<GroupeList> {
           margin: const EdgeInsets.all(10),
           // render list item
           child: ListTile(
-            contentPadding: const EdgeInsets.all(10),
+            contentPadding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
+            leading: Container(
+              padding: EdgeInsets.only(right: 12.0),
+              decoration: new BoxDecoration(
+                  border: new Border(
+                      right: new BorderSide(width: 1.0, color: Colors.white24))),
+              child: Icon(Icons.autorenew, color: Colors.blue),
+            ),
+            // contentPadding: const EdgeInsets.all(10),
             title: Text(snapshot.data![index].name.toString()),
+            subtitle: Row(
+              children: <Widget>[
+                Icon(Icons.linear_scale, color: Colors.yellowAccent),
+                Text(" Intermediate", style: TextStyle(color: Colors.white))
+              ],
+            ),
+            trailing: IconButton(
+              onPressed: () {
+                Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => GroupeDetail(groupe: snapshot.data![index])),
+                );
+              },
+              icon: Icon(Icons.keyboard_arrow_right, color: Colors.black, size: 30.0),
+            )
           ),
         ),
       )
@@ -48,6 +73,8 @@ class _GroupeListState extends State<GroupeList> {
     }
     );
   }
+  GlobalKey<CurvedNavigationBarState> _bottomNavigationKey = GlobalKey();
+  int _page = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -62,7 +89,30 @@ class _GroupeListState extends State<GroupeList> {
           children: [
             Expanded(child: buildFutureBuilder())
           ],
-        )
+        ),
+      bottomNavigationBar: CurvedNavigationBar(
+        key: _bottomNavigationKey,
+        index: 0,
+        height: 60.0,
+        items: <Widget>[
+          Icon(Icons.home, size: 30),
+          Icon(Icons.list, size: 30),
+          Icon(Icons.compare_arrows, size: 30),
+          Icon(Icons.call_split, size: 30),
+          Icon(Icons.perm_identity, size: 30),
+        ],
+        color: Colors.white,
+        buttonBackgroundColor: Colors.white,
+        backgroundColor: Colors.blueAccent,
+        animationCurve: Curves.easeInOut,
+        animationDuration: Duration(milliseconds: 600),
+        onTap: (index) {
+          setState(() {
+            _page = index;
+          });
+        },
+        letIndexChange: (index) => true,
+      ),
 
       );
   }

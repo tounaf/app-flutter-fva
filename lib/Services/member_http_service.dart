@@ -1,17 +1,18 @@
 import 'dart:convert';
 import 'package:intl/intl.dart';
 import 'package:labs_flutter_pulse/Models/groupe_model.dart';
+import 'package:labs_flutter_pulse/Models/user_model.dart';
 import 'package:labs_flutter_pulse/Models/vola_model.dart';
 import 'package:http/http.dart' as http;
 import 'dart:async';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:labs_flutter_pulse/Services/token_service.dart';
 
-class GroupeHttpService {
+class MemberHttpService {
   var baseUrl = dotenv.env['HOST'];
-  Future<List<Groupe>> fetchGroupe() async {
+  Future<List<Member>> fetchGroupe() async {
     final token = await TokenService().getToken();
-    final response = await http.get(Uri.parse('${baseUrl}/api/groups'),
+    final response = await http.get(Uri.parse('${baseUrl}/api/users'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
         'Authorization': 'Bearer $token'
@@ -21,7 +22,7 @@ class GroupeHttpService {
       return List.generate(jsonResponse['hydra:member'].length, (index) {
         print(index);
         print(jsonResponse['hydra:member'][index]);
-        return Groupe.fromJson(jsonResponse, jsonResponse['hydra:member'][index]);
+        return Member.fromJson(jsonResponse, jsonResponse['hydra:member'][index]);
       });
     } else {
       throw Exception('Unexpected error occured!');

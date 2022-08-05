@@ -4,6 +4,7 @@ class Groupe {
   final String schemaType;
   final int id;
   final String name;
+  final List<dynamic?> members;
 
   const Groupe({
         required this.schemaContext,
@@ -11,6 +12,7 @@ class Groupe {
         required this.schemaType,
         required this.id,
         required this.name,
+        required List<dynamic?>this.members
       });
 
   factory Groupe.fromJson(schema, Map<String, dynamic> json) {
@@ -20,6 +22,7 @@ class Groupe {
       schemaId: schema['@id'],
       id: json['id'],
       name: json['name'],
+      members: json['users'],
     );
   }
 }

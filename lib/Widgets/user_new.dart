@@ -41,7 +41,7 @@ class _UserNewFormState extends State<UserNewForm> {
   final GroupeHttpService groupeHttpService = GroupeHttpService();
   late Future <List<Groupe>> futureData;
 
-  late String group;
+  String group = '1';
   // data post
 
   final _formKey = GlobalKey<FormState>();
@@ -72,40 +72,26 @@ class _UserNewFormState extends State<UserNewForm> {
   Column buildColumn() {
       return Column(
         children: [
-          Padding(
-            padding: EdgeInsets.all(16.0),
-            child:
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  const Text('Groupe'),
-                  // Spacer(),
-                  FutureBuilder(
-                      future: futureData,
-                      builder: (BuildContext ctx, AsyncSnapshot<List> snapshot) {
-                        print(snapshot);
-                        return DropdownButton<String>(
+          FutureBuilder(
+              future: futureData,
+              builder: (BuildContext ctx, AsyncSnapshot<List> snapshot) {
+                print(snapshot);
+                return DropdownButton<String>(
 
-                            hint: Text("Select"),
-                            value: group,
-                            onChanged: (newValue) {
-                              print(newValue);
-                              setState(() {
-                                group = newValue!;
-                              });
-                            },
-                            items: snapshot.data!.map((gp) {
-                              return DropdownMenuItem<String>(
-                                child: Text(gp.name),
-                                value: gp.id.toString(),
-                              );
-                            }).toList());
-                      }),
-                ],
-              )
-          )
-          ,
-
+                    hint: Text("Select"),
+                    value: group,
+                    onChanged: (newValue) {
+                      setState(() {
+                        group = newValue!;
+                      });
+                    },
+                    items: snapshot.data?.map((gp) {
+                      return DropdownMenuItem<String>(
+                        child: Text(gp.name),
+                        value: gp.id.toString(),
+                      );
+                    }).toList());
+              }),
           TextFormField(
             validator: (value) {
               print(value);
@@ -198,18 +184,19 @@ class _UserNewFormState extends State<UserNewForm> {
                 //   }
                 // });
 
-                userHttpService.add(
+                var isAdded = userHttpService.add(
                     usernameController.text,
                     firstnameController.text,
                     lastnameController.text,
                     phoneController.text,
                     addressController.text,
                     group
-                ).then((value) {
+                );
+                if(isAdded == Future.value(true)) {
                   Navigator.push(context,
                     MaterialPageRoute(builder: (context) => UserList()),
                   );
-                });
+                }
               }
             },
             child: const Text('Submit'),
@@ -222,7 +209,6 @@ class _UserNewFormState extends State<UserNewForm> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Nouveau'),
-        backgroundColor: Colors.pink.shade400,
       ),
       body: Form(
         key: _formKey,
