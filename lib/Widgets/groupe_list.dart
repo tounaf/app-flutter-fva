@@ -4,6 +4,7 @@ import 'package:labs_flutter_pulse/Models/groupe_model.dart';
 import 'package:http/http.dart' as http;
 import 'package:labs_flutter_pulse/Services/groupe_http_service.dart';
 import 'package:labs_flutter_pulse/Widgets/groupe_detail.dart';
+import 'package:labs_flutter_pulse/Widgets/home.dart';
 import 'package:labs_flutter_pulse/Widgets/member_list.dart';
 import 'package:labs_flutter_pulse/Widgets/user_new.dart';
 import 'package:labs_flutter_pulse/Widgets/vola_new.dart';
@@ -111,6 +112,11 @@ class _GroupeListState extends State<GroupeList> {
           setState(() {
             _page = index;
           });
+          if(index == 0) {
+            Navigator.push(context,
+              MaterialPageRoute(builder: (context) => const Home()),
+            );
+          }
           if(index == 4) {
             Navigator.push(context,
               MaterialPageRoute(builder: (context) => const UserNewForm()),

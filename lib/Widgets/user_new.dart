@@ -171,19 +171,6 @@ class _UserNewFormState extends State<UserNewForm> {
                   const SnackBar(content: Text('Processing Data')),
                 );
 
-                // _isAuthenticated = entryHttpService.login(
-                //     usernameController.text,
-                //     passwordController.text
-                // );
-                // _isAuthenticated.then((value) {
-                //   print(_isAuthenticated);
-                //   if(value == true) {
-                //     Navigator.push(context,
-                //       MaterialPageRoute(builder: (context) => const Home()),
-                //     );
-                //   }
-                // });
-
                 var isAdded = userHttpService.add(
                     usernameController.text,
                     firstnameController.text,

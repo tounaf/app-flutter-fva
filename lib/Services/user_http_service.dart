@@ -23,9 +23,6 @@ class UserHttpService {
     if (response.statusCode == 200) {
       var jsonResponse = jsonDecode(response.body);
       return List.generate(jsonResponse['hydra:member'].length, (index) {
-        print('----- response');
-        print(index);
-        print(jsonResponse['hydra:member'][index]);
         return Member.fromJson(jsonResponse, jsonResponse['hydra:member'][index]);
       });
     } else {
@@ -43,12 +40,9 @@ class UserHttpService {
         'Authorization': 'Bearer $token'
       },
     );
-    print('-------------------- ');
     if (response.statusCode == 200) {
       var jsonResponse = jsonDecode(response.body);
       return List.generate(jsonResponse['hydra:member'].length, (index) {
-        print(index);
-        print(jsonResponse['hydra:member'][index]);
         return Member.fromJson(jsonResponse, jsonResponse['hydra:member'][index]);
       });
     } else {
@@ -66,9 +60,7 @@ class UserHttpService {
       ) async {
 
     final token = await TokenService().getToken();
-    print('==================');
-    print(groupId);
-    print(username);
+    final contextIdGroup = "/api/groups/$groupId";
     final response = await http.post(
       Uri.parse('${baseUrl}/api/users'),
       headers: <String, String>{
@@ -79,13 +71,11 @@ class UserHttpService {
         'username': username,
         'firstname': firstname,
         'lastname': lastname,
-        'phone': phone,
+        'phoneNumber': phone,
         'address': address,
-        'group': "/api/groups/$groupId",
+        'groupe': contextIdGroup,
       }),
     );
-    print(response.statusCode);
-    print(response.request);
     if (response.statusCode == 201) {
       // If the server did return a 201 CREATED response,
       // then parse the JSON.
