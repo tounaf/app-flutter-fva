@@ -5,6 +5,7 @@ import 'package:http/http.dart' as http;
 import 'package:labs_flutter_pulse/Services/groupe_http_service.dart';
 import 'package:labs_flutter_pulse/Widgets/groupe_detail.dart';
 import 'package:labs_flutter_pulse/Widgets/member_list.dart';
+import 'package:labs_flutter_pulse/Widgets/user_new.dart';
 import 'package:labs_flutter_pulse/Widgets/vola_new.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 
@@ -39,18 +40,18 @@ class _GroupeListState extends State<GroupeList> {
           margin: const EdgeInsets.all(10),
           // render list item
           child: ListTile(
-            contentPadding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
+            contentPadding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
             leading: Container(
-              padding: EdgeInsets.only(right: 12.0),
-              decoration: new BoxDecoration(
-                  border: new Border(
-                      right: new BorderSide(width: 1.0, color: Colors.white24))),
-              child: Icon(Icons.autorenew, color: Colors.blue),
+              padding: const EdgeInsets.only(right: 12.0),
+              decoration: const BoxDecoration(
+                  border:  Border(
+                      right: BorderSide(width: 1.0, color: Colors.white24))),
+              child: const Icon(Icons.autorenew, color: Colors.blue),
             ),
             // contentPadding: const EdgeInsets.all(10),
             title: Text(snapshot.data![index].name.toString()),
             subtitle: Row(
-              children: <Widget>[
+              children: const <Widget>[
                 Icon(Icons.linear_scale, color: Colors.yellowAccent),
                 Text(" Intermediate", style: TextStyle(color: Colors.white))
               ],
@@ -61,7 +62,7 @@ class _GroupeListState extends State<GroupeList> {
                   MaterialPageRoute(builder: (context) => GroupeDetail(groupe: snapshot.data![index])),
                 );
               },
-              icon: Icon(Icons.keyboard_arrow_right, color: Colors.black, size: 30.0),
+              icon: const Icon(Icons.keyboard_arrow_right, color: Colors.black, size: 30.0),
             )
           ),
         ),
@@ -94,7 +95,7 @@ class _GroupeListState extends State<GroupeList> {
         key: _bottomNavigationKey,
         index: 0,
         height: 60.0,
-        items: <Widget>[
+        items: const <Widget>[
           Icon(Icons.home, size: 30),
           Icon(Icons.list, size: 30),
           Icon(Icons.compare_arrows, size: 30),
@@ -110,6 +111,11 @@ class _GroupeListState extends State<GroupeList> {
           setState(() {
             _page = index;
           });
+          if(index == 4) {
+            Navigator.push(context,
+              MaterialPageRoute(builder: (context) => const UserNewForm()),
+            );
+          }
         },
         letIndexChange: (index) => true,
       ),
