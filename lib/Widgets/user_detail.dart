@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:labs_flutter_pulse/Widgets/entry_new.dart';
 import 'package:labs_flutter_pulse/Widgets/member_list.dart';
 class MemberDetail extends StatelessWidget {
   const MemberDetail({super.key, required this.member});
@@ -65,6 +66,14 @@ class MemberDetail extends StatelessWidget {
         children: [
             Expanded(child: child)
         ],
+      ),
+      floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.add),
+        onPressed: () {
+          Navigator.push(context,
+            MaterialPageRoute(builder: (context) => const EntryForm()),
+          );
+        },
       ),
     );
   }
