@@ -9,6 +9,7 @@ class Member {
   final String phoneNumber;
   final String? address;
   final String groupe;
+  final List<dynamic> entries;
 
   const Member({
     required this.schemaContext,
@@ -21,6 +22,7 @@ class Member {
     required this.phoneNumber,
     required this.address,
     required this.groupe,
+    required List<dynamic>this.entries
   });
 
   factory Member.fromJson(schema, Map<String, dynamic> json) {
@@ -35,6 +37,7 @@ class Member {
       phoneNumber: json['phoneNumber'],
       address: json['address'],
       groupe: json['groupe'],
+      entries: json['entries']
     );
   }
 }

@@ -29,7 +29,7 @@ class _EntryFormState extends State<EntryForm> {
   final EntryHttpService entryHttpService = EntryHttpService();
   final montantController = TextEditingController();
   final descriptionController = TextEditingController();
-  final format = DateFormat("yyyy-MM-dd H:i:s");
+  final format = DateFormat("yyyy-MM-dd H:m:s");
   // data post
   var montantVola;
   var descriptionVola;
@@ -185,6 +185,7 @@ class _EntryFormState extends State<EntryForm> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Nouveau'),
+        backgroundColor: Colors.pink.shade400,
       ),
       body: Form(
         key: _formKey,

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:labs_flutter_pulse/Models/groupe_model.dart';
 import 'package:labs_flutter_pulse/Widgets/member_list.dart';
+import 'package:labs_flutter_pulse/Widgets/user_detail.dart';
 class GroupeDetail extends StatelessWidget {
   const GroupeDetail({super.key, required this.groupe});
   final Groupe groupe;
@@ -37,8 +38,10 @@ class GroupeDetail extends StatelessWidget {
               ),
               trailing: IconButton(
                 onPressed: () {
+                  print('-----------------members');
+                  print(members[index]);
                   Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => MemberList()),
+                    MaterialPageRoute(builder: (context) => MemberDetail(member: members[index])),
                   );
                 },
                 icon: Icon(Icons.keyboard_arrow_right, color: Colors.black, size: 30.0),
