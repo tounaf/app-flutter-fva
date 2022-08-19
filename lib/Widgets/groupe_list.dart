@@ -33,7 +33,6 @@ class _GroupeListState extends State<GroupeList> {
     return FutureBuilder <List<Groupe>>(
       future: futureData,
       builder: (BuildContext ctx, AsyncSnapshot<List> snapshot) {
-      print(snapshot);
       return snapshot.hasData
           ? ListView.builder(
         // render the list
@@ -117,9 +116,9 @@ class _GroupeListState extends State<GroupeList> {
             );
           }
           if(index == 1) {
-            Navigator.push(context,
-              MaterialPageRoute(builder: (context) => const EntryForm()),
-            );
+            // Navigator.push(context,
+            //   MaterialPageRoute(builder: (context) => const EntryForm(member: ,)),
+            // );
           }
 
           if(index == 2) {

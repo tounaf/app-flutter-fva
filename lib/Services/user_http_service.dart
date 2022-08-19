@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:ffi';
+import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:labs_flutter_pulse/Models/groupe_model.dart';
 import 'package:labs_flutter_pulse/Models/user_model.dart';
@@ -100,7 +101,6 @@ class UserHttpService {
         'password': password,
       }),
     );
-    print(response.statusCode);
     if (response.statusCode == 200) {
       // If the server did return a 201 CREATED response,
       // then parse the JSON.
@@ -108,7 +108,7 @@ class UserHttpService {
       _prefs.setToken(jsonResponse['token'].toString());
       return Future.value(true);
     } else {
-      throw Exception('Failed to create album.');
+      return Future.value(false);
     }
   }
 

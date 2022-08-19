@@ -15,7 +15,8 @@ import 'package:http/http.dart' as http;
 
 // Define a custom Form widget.
 class EntryForm extends StatefulWidget {
-  const EntryForm({super.key});
+  final member;
+  const EntryForm({super.key, required this.member});
 
   @override
   State<EntryForm> createState() => _EntryFormState();
@@ -34,6 +35,7 @@ class _EntryFormState extends State<EntryForm> {
   var montantVola;
   var descriptionVola;
   var typeVola = 'credit';
+  var userId;
   DateTime _selectedDateVola =  DateTime.now();
 
   final _formKey = GlobalKey<FormState>();
@@ -57,7 +59,7 @@ class _EntryFormState extends State<EntryForm> {
   @override
   void initState() {
     super.initState();
-
+    userId = widget.member['@id'];
     // Start listening to changes.
     montantController.addListener(_printLatestValue);
   }
@@ -93,7 +95,6 @@ class _EntryFormState extends State<EntryForm> {
   }
 
   void _printLatestValue() {
-    print('Second text field: ${montantController.text}');
   }
 
   Column buildColumn() {
@@ -115,7 +116,6 @@ class _EntryFormState extends State<EntryForm> {
           ),
           TextFormField(
             validator: (value) {
-              print(value);
               if (value == null || value.isEmpty) {
                 return 'Ajouter un montant';
               }
@@ -167,8 +167,11 @@ class _EntryFormState extends State<EntryForm> {
                     int.parse(montantController.text),
                     descriptionController.text,
                     typeVola,
-                    _selectedDateVola
+                    _selectedDateVola,
+                    userId
                 ).then((value) {
+                  print('-------value');
+                  print(value);
                   Navigator.push(context,
                     MaterialPageRoute(builder: (context) => EntryList()),
                   );
@@ -182,9 +185,10 @@ class _EntryFormState extends State<EntryForm> {
   }
   @override
   Widget build(BuildContext context) {
+    String firstname = widget.member['firstname'];
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Nouveau'),
+        title: Text('Paiment cotisation: $firstname'),
         backgroundColor: Colors.pink.shade400,
       ),
       body: Form(

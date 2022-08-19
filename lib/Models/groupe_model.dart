@@ -5,6 +5,7 @@ class Groupe {
   final int id;
   final String name;
   final List<dynamic?> members;
+  final int totalAmountGroup;
 
   const Groupe({
         required this.schemaContext,
@@ -12,7 +13,8 @@ class Groupe {
         required this.schemaType,
         required this.id,
         required this.name,
-        required List<dynamic?>this.members
+        required List<dynamic?>this.members,
+        required this.totalAmountGroup
       });
 
   factory Groupe.fromJson(schema, Map<String, dynamic> json) {
@@ -23,6 +25,7 @@ class Groupe {
       id: json['id'],
       name: json['name'],
       members: json['users'],
+      totalAmountGroup: json['totalAmountGroup']
     );
   }
 }

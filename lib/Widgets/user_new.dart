@@ -10,6 +10,7 @@ import 'package:labs_flutter_pulse/Services/groupe_http_service.dart';
 import 'package:labs_flutter_pulse/Services/user_http_service.dart';
 import 'package:labs_flutter_pulse/Services/vola_http_service.dart';
 import 'package:labs_flutter_pulse/Widgets/entry_list.dart';
+import 'package:labs_flutter_pulse/Widgets/groupe_list.dart';
 import 'package:labs_flutter_pulse/Widgets/home.dart';
 import 'package:labs_flutter_pulse/Widgets/user_list.dart';
 import 'package:labs_flutter_pulse/Widgets/vola_list.dart';
@@ -50,8 +51,6 @@ class _UserNewFormState extends State<UserNewForm> {
   void initState() {
     super.initState();
     futureData = groupeHttpService.fetchGroupe();
-    print('------ groupe');
-    print(futureData);
     // Start listening to changes.
     // montantController.addListener(_printLatestValue);
   }
@@ -75,7 +74,6 @@ class _UserNewFormState extends State<UserNewForm> {
           FutureBuilder(
               future: futureData,
               builder: (BuildContext ctx, AsyncSnapshot<List> snapshot) {
-                print(snapshot);
                 return DropdownButton<String>(
 
                     hint: Text("Select"),
@@ -94,7 +92,6 @@ class _UserNewFormState extends State<UserNewForm> {
               }),
           TextFormField(
             validator: (value) {
-              print(value);
               if (value == null || value.isEmpty) {
                 return 'Ajouter Username';
               }
@@ -108,7 +105,6 @@ class _UserNewFormState extends State<UserNewForm> {
           ),
           TextFormField(
             validator: (value) {
-              print(value);
               if (value == null || value.isEmpty) {
                 return 'Ajouter nom';
               }
@@ -171,19 +167,24 @@ class _UserNewFormState extends State<UserNewForm> {
                   const SnackBar(content: Text('Processing Data')),
                 );
 
-                var isAdded = userHttpService.add(
+                userHttpService.add(
                     usernameController.text,
                     firstnameController.text,
                     lastnameController.text,
                     phoneController.text,
                     addressController.text,
                     group
-                );
-                if(isAdded == Future.value(true)) {
-                  Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => UserList()),
-                  );
-                }
+                ).then((value) {
+                    if(value == true) {
+                      Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => GroupeList()),
+                      );
+                    } else {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(content: Text('Erreur lors de la création de membre')),
+                      );  
+                    }
+                });
               }
             },
             child: const Text('Submit'),
@@ -195,7 +196,7 @@ class _UserNewFormState extends State<UserNewForm> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Nouveau'),
+        title: const Text('Nouveau membre'),
       ),
       body: Form(
         key: _formKey,

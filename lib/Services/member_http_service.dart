@@ -20,8 +20,6 @@ class MemberHttpService {
     if (response.statusCode == 200) {
       var jsonResponse = jsonDecode(response.body);
       return List.generate(jsonResponse['hydra:member'].length, (index) {
-        print(index);
-        print(jsonResponse['hydra:member'][index]);
         return Member.fromJson(jsonResponse, jsonResponse['hydra:member'][index]);
       });
     } else {

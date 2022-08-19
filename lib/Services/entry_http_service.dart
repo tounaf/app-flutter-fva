@@ -26,7 +26,7 @@ class EntryHttpService {
 
   }
 
-  Future<bool> addEntry(int montant, String description, String type, DateTime date) async {
+  Future<bool> addEntry(int montant, String description, String type, DateTime date, String userId) async {
 
     final token = await TokenService().getToken();
 
@@ -41,9 +41,13 @@ class EntryHttpService {
         'description': description,
         'type': type,
         'date': DateFormat('yyyy-MM-dd').format(date),
+        'user': userId,
+        'typeCollectionFond': '/api/type_collection_fonds/1'
       }),
     );
-
+    print('++++++++++++++++');
+    print(response.statusCode);
+    print(response.body);
     if (response.statusCode == 201) {
       // If the server did return a 201 CREATED response,
       // then parse the JSON.

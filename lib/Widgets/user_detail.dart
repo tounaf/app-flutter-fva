@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:labs_flutter_pulse/Widgets/entry_new.dart';
 import 'package:labs_flutter_pulse/Widgets/member_list.dart';
 class MemberDetail extends StatelessWidget {
@@ -7,14 +8,13 @@ class MemberDetail extends StatelessWidget {
 
   buildFutureBuilder() {
     var entries = member['entries'];
-    print('----entries');
-    print(entries);
     return ListView.builder(
       // render the list
       itemCount: entries.length,
       itemBuilder: (BuildContext context, index) {
         String firstname = entries[index]['description'].toString();
-        String date = entries[index]['date'].toString();
+        String date = DateFormat('dd-mm-y').format(DateTime.parse(entries[index]['date'].toString()));
+        // String date = entries[index]['date'].toString();
         return Card(
           margin: const EdgeInsets.all(10),
           // render list item
@@ -38,9 +38,9 @@ class MemberDetail extends StatelessWidget {
               ),
               trailing: IconButton(
                 onPressed: () {
-                  Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => MemberList()),
-                  );
+                  // Navigator.push(context,
+                  //   MaterialPageRoute(builder: (context) => MemberList()),
+                  // );
                 },
                 icon: Icon(Icons.keyboard_arrow_right, color: Colors.black, size: 30.0),
               )
@@ -53,13 +53,13 @@ class MemberDetail extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var name = member['firstname'];
-    var child = member['entries'].length > 0 ? buildFutureBuilder() : const Text('Aucune cotisation payée');
-  
+    var child = member['entries'].length > 0 ? buildFutureBuilder() : const Center(child: Text('Aucune cotisation payée'),);
+    var totalAmount = member['totalAmountUser'];
     return Scaffold(
       appBar: AppBar(
           shadowColor: Colors.red,
           elevation: 15,
-          title: Text('$name'),
+          title: Text('$name | Cotisation :  $totalAmount'),
           backgroundColor: Colors.pink.shade400,
         ),
       body: Column(
@@ -71,7 +71,7 @@ class MemberDetail extends StatelessWidget {
         child: Icon(Icons.add),
         onPressed: () {
           Navigator.push(context,
-            MaterialPageRoute(builder: (context) => const EntryForm()),
+            MaterialPageRoute(builder: (context) => EntryForm(member: member)),
           );
         },
       ),

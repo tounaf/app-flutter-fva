@@ -2,14 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:labs_flutter_pulse/Models/groupe_model.dart';
 import 'package:labs_flutter_pulse/Widgets/member_list.dart';
 import 'package:labs_flutter_pulse/Widgets/user_detail.dart';
+import 'package:labs_flutter_pulse/Widgets/user_new.dart';
 class GroupeDetail extends StatelessWidget {
   const GroupeDetail({super.key, required this.groupe});
   final Groupe groupe;
 
   buildFutureBuilder() {
     var members = groupe.members;
-    print('----mbers');
-    print(members);
     return ListView.builder(
       // render the list
       itemCount: members.length,
@@ -38,8 +37,6 @@ class GroupeDetail extends StatelessWidget {
               ),
               trailing: IconButton(
                 onPressed: () {
-                  print('-----------------members');
-                  print(members[index]);
                   Navigator.push(context,
                     MaterialPageRoute(builder: (context) => MemberDetail(member: members[index])),
                   );
@@ -56,7 +53,7 @@ class GroupeDetail extends StatelessWidget {
   Widget build(BuildContext context) {
     var groupeName = groupe.name;
     var nbrMembre = groupe.members.length;
-    var child = nbrMembre > 0 ? buildFutureBuilder() : const Text('Aucun utilisateur');
+    var child = nbrMembre > 0 ? buildFutureBuilder() : const Center(child: Text('Aucun membre'),);
   
     return Scaffold(
       appBar: AppBar(
@@ -70,6 +67,14 @@ class GroupeDetail extends StatelessWidget {
             Expanded(child: child)
         ],
       ),
+      floatingActionButton: FloatingActionButton(
+          child: Icon(Icons.add),
+          onPressed: () {
+            Navigator.push(context,
+            MaterialPageRoute(builder: (context) => const UserNewForm()),
+          );
+          },
+        ),
     );
   }
 }

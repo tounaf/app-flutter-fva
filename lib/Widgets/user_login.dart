@@ -47,7 +47,6 @@ class _UserLoginFormState extends State<UserLoginForm> {
 
 
   void _printLatestValue() {
-    print('Second text field: ${usernameController.text}');
   }
   Column getColonne() {
     return Column(
@@ -77,7 +76,6 @@ class _UserLoginFormState extends State<UserLoginForm> {
           padding: EdgeInsets.all(10),
           child: TextFormField(
             validator: (value) {
-              print(value);
               if (value == null || value.isEmpty) {
                 return 'Ajouter login';
               }
@@ -118,11 +116,14 @@ class _UserLoginFormState extends State<UserLoginForm> {
                   passwordController.text
               );
               _isAuthenticated.then((value) {
-                print(_isAuthenticated);
                 if(value == true) {
                   Navigator.push(context,
                     MaterialPageRoute(builder: (context) => const Home()),
                   );
+                } else {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(content: Text('Login ou mot de passe incorrecte')),
+                  );  
                 }
               });
             }
