@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:labs_flutter_pulse/Widgets/Chart/exemple.dart';
+import 'package:labs_flutter_pulse/Widgets/Chart/graph.dart';
 import 'package:labs_flutter_pulse/Widgets/entry_list.dart';
 import 'package:labs_flutter_pulse/Widgets/first_screen.dart';
 import 'package:labs_flutter_pulse/Widgets/groupe_list.dart';
@@ -50,7 +51,7 @@ class Layout extends StatelessWidget {
               title: const Text('Ajouter User'),
               onTap: () {
                 Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => PieChartSample2()),
+                  MaterialPageRoute(builder: (context) => MyHomePage()),
                 );
               },
             ),

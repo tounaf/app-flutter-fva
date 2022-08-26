@@ -14,13 +14,27 @@ class PieChartSample2 extends StatefulWidget {
 class PieChart2State extends State {
   final GroupeHttpService groupeHttpService = GroupeHttpService();
   late Future <List<Groupe>> futureData;
+  int totalAmountAssoc = 0;
 
   int touchedIndex = -1;
+  List listGroupe = [];
 
   @override
   void initState() {
     super.initState();
     futureData = groupeHttpService.fetchGroupe();
+    // listGroupe = await groupeHttpService.fetchGroupe();
+    futureData.then((value) {
+        print('-------------- future');
+        
+        value.forEach((element) {
+            print(element.totalAmountGroup);
+            totalAmountAssoc += element.totalAmountGroup;
+            listGroupe.add([element.totalAmountGroup]);
+        });
+    });
+    print('+++++++++++ totota');
+    print(totalAmountAssoc);
   }
 
   FutureBuilder<List<Groupe>> buildFutureBuilder() {
@@ -34,7 +48,7 @@ class PieChart2State extends State {
         itemCount: snapshot.data!.length,
         itemBuilder: (BuildContext context, index) {
           var childToShow = Indicator(
-                    color: Color(0xff0293ee),
+                    color: Color(Colors.green.value),
                     text: snapshot.data![index].name.toString().substring(0, 6), //snapshot.data![index].name.toString(),
                     isSquare: true,
                   );
@@ -117,6 +131,8 @@ class PieChart2State extends State {
             totalAmountAssoc += element.totalAmountGroup;
         });
     });
+    print('=============');
+    print(totalAmountAssoc);
     return List.generate(4, (i) {
       final isTouched = i == touchedIndex;
       final fontSize = isTouched ? 25.0 : 16.0;

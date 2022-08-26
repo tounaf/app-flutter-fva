@@ -1,7 +1,7 @@
 class MemoModel{
-  final int id;
-  final String title;
-  final String content;
+  final int? id;
+  final String? title;
+  final String? content;
 
   MemoModel({this.id,this.title,this.content});
 
